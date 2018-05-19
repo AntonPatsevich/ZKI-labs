@@ -1,0 +1,14 @@
+C:\Users\Alex\source\repos\Diff\Diff\bin\Debug\Diff.exe.config
+C:\Users\Alex\source\repos\Diff\Diff\bin\Debug\Diff.exe
+C:\Users\Alex\source\repos\Diff\Diff\bin\Debug\Diff.pdb
+C:\Users\Alex\source\repos\Diff\Diff\obj\Debug\Diff.csprojResolveAssemblyReference.cache
+C:\Users\Alex\source\repos\Diff\Diff\obj\Debug\Diff.csproj.CoreCompileInputs.cache
+C:\Users\Alex\source\repos\Diff\Diff\obj\Debug\Diff.exe
+C:\Users\Alex\source\repos\Diff\Diff\obj\Debug\Diff.pdb
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\bin\Debug\Diff.exe.config
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\bin\Debug\Diff.exe
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\bin\Debug\Diff.pdb
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\obj\Debug\Diff.csprojResolveAssemblyReference.cache
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\obj\Debug\Diff.csproj.CoreCompileInputs.cache
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\obj\Debug\Diff.exe
+D:\КБиП\3 курс\Защита Компьютерной информации\Diff\Diff\obj\Debug\Diff.pdb
