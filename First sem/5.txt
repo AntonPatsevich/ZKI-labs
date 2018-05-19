@@ -1,0 +1,106 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+namespace zki_5
+{
+    class Program
+    {
+        static List<string> s = new List<string>();//начальная строка
+        static List<string> key = new List<string>();//key
+        static List<string> s1 = new List<string>();//шифртукст
+        static List<string> s2 = new List<string>();//расщифровонный текст v 2
+        
+        static void summ(string text)
+        {
+            byte[] array = Encoding.Default.GetBytes(text);
+            for (int i = 0; i < array.Length; i++)
+            {
+                
+                s.Add(array[i].ToString());
+            }
+         
+        }
+        static void summ1(string text)
+        {
+            byte[] array = Encoding.Default.GetBytes(text);
+            for (int i = 0; i < array.Length; i++)
+            {
+                key.Add(array[i].ToString());
+            }            
+        }
+        static void perevod()
+        {
+            // преобразуем строку в байты
+            for (int i = 0; i < s.Count; i++)
+            {
+                int b = Convert.ToByte(key[i]);
+                int b2 = Convert.ToByte(s[i]);
+                int b3 = b ^ b2;                
+                s1.Add(Convert.ToString(b3, 10));
+            }
+        }
+        static void perevod1()
+        {
+            // преобразуем строку в байты
+            for (int i = 0; i < s.Count; i++)
+            {
+                
+                int b = Convert.ToByte(key[i]);
+                int b2 = Convert.ToByte(s1[i]);
+                int b3 = b ^ b2;
+                s2.Add(Convert.ToString(b3, 10));
+            }
+        }
+       
+        static void drow(List<string> dd)
+        {
+            for (int i = 0; i < dd.Count; i++)
+            {
+                Console.WriteLine(dd[i]);
+            }
+        }
+        static void drow1(List<string> dd)
+        {
+            for (int i = 0; i < dd.Count; i++)
+            {
+                byte[] b2 = { Convert.ToByte(dd[i]) };
+                Console.WriteLine(Encoding.ASCII.GetString(b2));
+            }
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введите строку для записи в файл:");
+            string text = Console.ReadLine();
+            string FF = Console.ReadLine();
+            if(FF.Length>text.Length)
+            {
+                FF = FF.Remove(text.Length);
+            }
+            if (FF.Length < text.Length)
+            {
+                var GG = text.Length - FF.Length;
+                Console.WriteLine("ВВедите: " + GG + " : элеманта");
+                string text1 = Console.ReadLine();
+                FF += text1;
+            }
+            // запись в файл
+            drow(s);
+            Console.WriteLine();
+
+            summ(text);
+            summ1(FF);
+            
+            perevod();
+            //drow(s1);
+            drow1(s1);
+            Console.WriteLine();
+            perevod1();            
+            drow1(s2);
+
+            Console.ReadLine();
+        }
+    }
+}

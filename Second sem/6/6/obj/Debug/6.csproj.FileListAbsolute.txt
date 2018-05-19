@@ -1,0 +1,13 @@
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\bin\Debug\6.exe.config
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\6.csprojResolveAssemblyReference.cache
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\_6.Form1.resources
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\_6.Properties.Resources.resources
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\6.csproj.GenerateResource.Cache
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\bin\Debug\6.exe
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\bin\Debug\6.pdb
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\6.exe
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\6.pdb
+C:\Users\Кирилл\Dropbox\Работа\III Курс\Практика\3 list\6\6\obj\Debug\_6.Form2.resources
+I:\6\6\bin\Debug\6.exe.config
+I:\6\6\obj\Debug\6.exe
+I:\6\6\obj\Debug\6.pdb

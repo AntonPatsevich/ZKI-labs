@@ -1,0 +1,18 @@
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe.config
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.pdb
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.csprojResolveAssemblyReference.cache
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.exe
+c:\users\adminpk\documents\visual studio 2012\Projects\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.pdb
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe.config
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.exe
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.pdb
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.pdb
+F:\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.csprojResolveAssemblyReference.cache
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe.config
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.exe
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\bin\Debug\ConsoleApplicationZKI1.pdb
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.csprojResolveAssemblyReference.cache
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.exe
+C:\Users\anton\Desktop\ConsoleApplicationZKI1\ConsoleApplicationZKI1\obj\Debug\ConsoleApplicationZKI1.pdb

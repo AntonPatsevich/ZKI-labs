@@ -1,0 +1,317 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.CodeDom;
+using System.ComponentModel;
+using System.Configuration;
+ 
+namespace ConsoleApplication1
+{
+    class PlayfairCipher
+    {
+        string Alphabet { get; set; }
+        string KeyWord { get; set; }
+        public PlayfairCipher(string Alphabet, string KeyWord)
+        {
+            this.KeyWord = string.Join("",
+                KeyWord.ToLower()
+                .Replace("י", "ט")
+                .Replace("¸", "ו")
+                .Replace("ת", "ü")
+                .Replace(" ", "")
+                .Distinct());
+ 
+            this.Alphabet = Alphabet.ToLower()
+                .Replace("י", "")
+                .Replace("¸", "")
+                .Replace(" ", "")
+                .Replace("ü", "");
+        }
+ 
+        public string Crypt(string Message)
+        {
+            Func<string[,], int[], int[], string> getPair = GetPairForCrypt;
+ 
+            return CryptOrUncrypt(Message, getPair);
+        }
+ 
+        public string Uncrypt(string Message)
+        {
+            Func<string[,], int[], int[], string> getPair = GetPairForUncrypt;
+ 
+            return CryptOrUncrypt(Message, getPair);
+        }
+ 
+        string CryptOrUncrypt(string Message, Func<string[,], int[], int[], string> GetPair)
+        {
+            var alphMatrix = CreateAlphMatrix();
+            var bigrams = CreateBigrams(Message);
+ 
+            var returnMessage = "";
+ 
+            var fIndex = new int[] { 0, 0 };
+            var sIndex = new int[] { 0, 0 };
+ 
+            foreach (var bi in bigrams)
+            {
+                fIndex = GetIndex(alphMatrix, bi.FirstLetter);
+                sIndex = GetIndex(alphMatrix, bi.SecondLetter);
+ 
+                returnMessage += GetPair(alphMatrix, fIndex, sIndex);
+            }
+ 
+            return returnMessage;
+        }
+        string GetPairForUncrypt(string[,] AplhMatrix, int[] FirstLetterIndexs, int[] SecondLetterIndexs)
+        {
+            string pair = "";
+ 
+            if (FirstLetterIndexs[0] == SecondLetterIndexs[0])
+            {
+                pair += AplhMatrix[
+                    FirstLetterIndexs[0],
+                      ((FirstLetterIndexs[1] - 1 + AplhMatrix.GetLength(1)) % AplhMatrix.GetLength(1))];
+ 
+                pair += AplhMatrix[
+                    SecondLetterIndexs[0],
+                      ((SecondLetterIndexs[1] - 1 + AplhMatrix.GetLength(1)) % AplhMatrix.GetLength(1))];
+            }
+            // ֲ מהםמל סעמכבצו
+            else if (FirstLetterIndexs[1] == SecondLetterIndexs[1])
+            {
+                pair += AplhMatrix[
+                 ((FirstLetterIndexs[0] - 1 + AplhMatrix.GetLength(0)) % AplhMatrix.GetLength(0)),
+                    FirstLetterIndexs[1]];
+ 
+ 
+                pair += AplhMatrix[
+                ((SecondLetterIndexs[0] - 1 + AplhMatrix.GetLength(0)) % AplhMatrix.GetLength(0)),
+                    SecondLetterIndexs[1]];
+            }
+            // ֲ מהםמל בכמו
+            else
+            {
+                pair += AplhMatrix[
+                   FirstLetterIndexs[0],
+                   SecondLetterIndexs[1]];
+ 
+                pair += AplhMatrix[
+                    SecondLetterIndexs[0],
+                    FirstLetterIndexs[1]];
+            }
+ 
+            return pair;
+        }
+        string GetPairForCrypt(string[,] AplhMatrix, int[] FirstLetterIndexs, int[] SecondLetterIndexs)
+        {
+            string pair = "";
+ 
+            if (FirstLetterIndexs[0] == SecondLetterIndexs[0])
+            {
+                pair += AplhMatrix[
+                 FirstLetterIndexs[0],
+                   ((FirstLetterIndexs[1] + 1) % AplhMatrix.GetLength(1))];
+ 
+                pair += AplhMatrix[
+                    SecondLetterIndexs[0],
+                      ((SecondLetterIndexs[1] + 1) % AplhMatrix.GetLength(1))];
+            }
+ 
+            // ֲ מהםמל סעמכבצו
+            else if (FirstLetterIndexs[1] == SecondLetterIndexs[1])
+            {
+                pair += AplhMatrix[
+                 ((FirstLetterIndexs[0] + 1) % AplhMatrix.GetLength(0)),
+                    FirstLetterIndexs[1]];
+ 
+                pair += AplhMatrix[
+                ((SecondLetterIndexs[0] + 1) % AplhMatrix.GetLength(0)),
+                    SecondLetterIndexs[1]];
+            }
+ 
+            // ֲ מהםמל בכמךו
+            else
+            {
+                pair += AplhMatrix[
+                   FirstLetterIndexs[0],
+                   SecondLetterIndexs[1]];
+ 
+                pair += AplhMatrix[
+                    SecondLetterIndexs[0],
+                    FirstLetterIndexs[1]];
+            }
+ 
+            return pair;
+        }
+        int[] GetIndex(string[,] matrix, string Letter)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (matrix[i, j] == Letter)
+                        return new int[] { i, j };
+                }
+            }
+            throw new Exception();
+        }
+ 
+        IEnumerable<Bigram> CreateBigrams(string normalMessage)
+        {
+            normalMessage = normalMessage.ToLower()
+                .Replace("י", "ט")
+                .Replace("¸", "ו")
+                .Replace("ü", "ת")
+                .Replace(" ", "");
+            var temp = new List<Bigram>();
+ 
+            for (int i = 0; i < normalMessage.Length; i += 2)
+            {
+                if (i == normalMessage.Length - 1)
+                {
+                    temp.Add(new Bigram()
+                    {
+                        FirstLetter = normalMessage[i].ToString(),
+                        SecondLetter = "ץ"
+                    });
+                }
+                else if (normalMessage[i] == normalMessage[i + 1])
+                {
+                    temp.Add(new Bigram()
+                    {
+                        FirstLetter = normalMessage[i].ToString(),
+                        SecondLetter = "ץ"
+                    });
+                    i--;
+                }
+                else
+                {
+                    temp.Add(new Bigram()
+                    {
+                        FirstLetter = normalMessage[i].ToString(),
+                        SecondLetter = normalMessage[i + 1].ToString()
+                    });
+                }
+            }
+ 
+            return temp;
+        }
+        string[,] CreateAlphMatrix()
+        {
+            var let = (KeyWord + Alphabet).Select(x => x.ToString()).Distinct().ToArray();
+ 
+            var alphMatrix = new string[5, 6];
+ 
+            var temp_index = 0;
+ 
+            Console.WriteLine("New alphabet:");
+ 
+            for (int i = 0; i < alphMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < alphMatrix.GetLength(1); j++)
+                {
+                    alphMatrix[i, j] = let[temp_index];
+                    Console.Write(alphMatrix[i, j] + " ");
+                    temp_index++;
+                }
+                Console.WriteLine("");
+            }
+ 
+            return alphMatrix;
+        }
+ 
+        class Bigram
+        {
+            public string FirstLetter { get; set; }
+            public string SecondLetter { get; set; }
+ 
+            public override string ToString()
+            {
+                return FirstLetter + " " + SecondLetter;
+            }
+        }
+    }
+    public static T ReadValueFromConsole<T>(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(message);
+        Console.ForegroundColor = ConsoleColor.White;
+        while (true)
+        {
+            try
+            {
+                return (T)Convert.ChangeType(Console.ReadLine(), typeof(T));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("ֲמחםטךכא מרטבךא. ֿמגעמנטעו גגמה");
+            }
+        }
+ 
+    }
+ 
+    static void Main(string[] args)
+    {
+        ActivateMenu();
+    }
+ 
+    private static void ActivateMenu()
+    {
+        var alph = /*ReadValueFromConsole<string>("ֲגוהטעו אכפאגטע");*/
+                   // ְֱֲֳִֵֶַָÊֻּֽ־ֿ׀ׁׂ׃װױײ׳״ÙÚÛÜÝÞß
+        "ְֱֲֳִֵֶַָÊֻּֽ־ֿ׀ׁׂ׃װױײ׳״ÙÚÛÜÝÞß";
+ 
+        var key = ReadValueFromConsole<string>("\nֲגוהטעו ךכ‏קוגמו סכמגמ");
+        // ׂ־ְֲ׀ָÙ
+        //"ׂ־ְֲ׀ָÙ";
+ 
+        var pc = new PlayfairCipher(alph, key);
+        bool active = true;
+        while (active)
+        {
+            Console.Clear();
+            var choise = ReadValueFromConsole<int>(@"ֲûבונטעו הויסעגטו:
+1. ַארטפנמגאעü ףךאחאםםף‏ סענמךף
+2. ִוסרטפנמגאעü ףךאחאםםף‏ סענמךף
+3. THERE IS NO ESCAPE");
+            switch (choise)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.Write("״טפנמגאםטו סענמךט.");
+                    var normalMessage = ReadValueFromConsole<string>("\nֲגוהטעו סענמךף הכÿ רטפנמגאםטÿ: ");
+                    // Ê־ִ ֵֹֻֿװֵֵֹ׀ְ ־ֽׁ־ְֲֽ ְֽ ָֿׁ־ֻÜַ־ְֲָָֽ ְּׂ׀ָײÛ ֱ׃Êֲ
+                    // "Ê־ִ ֵֹֻֿװֵֵֹ׀ְ ־ֽׁ־ְֲֽ ְֽ ָֿׁ־ֻÜַ־ְֲָָֽ ְּׂ׀ָײÛ ֱ׃Êֲ";
+                    var crypted = pc.Crypt(normalMessage);
+                    Console.WriteLine("\nResult: " + crypted);
+                    Console.WriteLine("De-crypted back: " + pc.Uncrypt(crypted));
+                    Console.ReadKey();
+                    break;
+                case 2:
+                    Console.Clear();
+                    Console.Write("ִורטפנמגאםטו סענמךט.");
+                    var cryptedMessage = ReadValueFromConsole<string>("\nֲגוהטעו סענמךף הכÿ הורטפנמגךט: ");
+                    // ּ־Ùֵßֲ׳Úְֻֿׂßֲּ־ּ׀ַװָÛֱֿׂÊֲָױֱײֱÙ״Ú׳״Ùֲָׂ׳־ְִױ־ְְֱֲָֿׂ׀ֶָּ
+                    //"ּ־Ùֵßֲ׳Úְֻֿׂßֲּ־ּ׀ַװָÛֱֿׂÊֲָױֱײֱÙ״Ú׳״Ùֲָׂ׳־ְִױ־ְְֱֲָֿׂ׀ֶָּ";
+                    var normal = pc.Uncrypt(cryptedMessage);
+                    Console.WriteLine("\nResult: " + normal);
+                    Console.WriteLine("Crypted back: " + pc.Crypt(normal));
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    active = new Random().Next(3) != 0;
+                    if (!active)
+                    {
+                        Console.WriteLine("Lucky One");
+                        Thread.Sleep(2 * 1000);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+ 
+    }
+}

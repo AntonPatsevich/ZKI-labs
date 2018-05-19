@@ -1,0 +1,347 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+namespace zy2
+{
+    class Program
+    {
+        static public string D = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        static public string D1 = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+        static void drow(int x, int y, char[,] mas)
+        {
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    Console.Write(mas[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+        }
+        static void uezar()
+        {
+            string A = "Весь алгоритм шифрования, кроме значения секретного ключа, известен криптоаналитикам противника".ToUpper();
+            string B = "";
+            Console.WriteLine(A);
+            char[] F = "Кинотеатр".ToUpper().ToCharArray();
+            Console.WriteLine(F);
+            string C = "";
+            Regex regex = new Regex(@"\W");
+            A = regex.Replace(A, "").ToString();
+            int t = 0, t1 = 0, j;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (t < F.Length)
+                {
+                    C += F[t];
+                    t++;
+                }
+                else
+                {
+                    t = 0;
+                    i--;
+                }
+            }
+            Console.WriteLine();
+            t = 0;
+            //зашифровка
+            for (int x = 0; x < A.Length; x++)
+            {
+                t = D.IndexOf(C[x]);
+                t1 = D.IndexOf(A[x]);
+                j = t1 + t;
+                if (j > 31)
+                {
+                    j -= 32;
+                }
+                B += D[j];
+                Console.Write(D[j]);
+            }
+            Console.WriteLine();
+            //расшифровка
+            for (int x = 0; x < A.Length; x++)
+            {
+                t = D.IndexOf(C[x]);
+                t1 = D.IndexOf(B[x]);
+                j = t1 - t;
+                if (j < 0)
+                {
+                    j += 32;
+                }
+                Console.Write(D[j]);
+            }
+            Console.WriteLine();
+        }
+        static void uezar2()
+        {
+            Console.WriteLine("введите сроку: ");
+            string A = Console.ReadLine().ToUpper();
+            string B = "";
+            Console.WriteLine("введите Шифр слово: ");
+            char[] F = Console.ReadLine().ToUpper().ToCharArray();
+            string C = "";
+            Regex regex = new Regex(@"\W");
+            A = regex.Replace(A, "").ToString();
+            int t = 0, t1 = 0, j;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (t < F.Length)
+                {
+                    C += F[t];
+                    t++;
+                }
+                else
+                {
+                    t = 0;
+                    i--;
+                }
+            }
+            Console.WriteLine();
+            t = 0;
+            //зашифровка
+            for (int x = 0; x < A.Length; x++)
+            {
+                t = D.IndexOf(C[x]);
+                t1 = D.IndexOf(A[x]);
+                j = t1 + t;
+                if (j > 31)
+                {
+                    j -= 32;
+                }
+                B += D[j];
+                Console.Write(D[j]);
+            }
+            Console.WriteLine();
+            //расшифровка
+            for (int x = 0; x < A.Length; x++)
+            {
+                t = D.IndexOf(C[x]);
+                t1 = D.IndexOf(B[x]);
+                j = t1 - t;
+                if (j < 0)
+                {
+                    j += 32;
+                }
+                Console.Write(D[j]);
+            }
+            Console.WriteLine();
+        }
+        static void append(string D, char[] Kay, char[,] MAS, int index)
+        {
+            int startG = 0, stopG = 0;
+            if (index == 0)
+            {
+                startG = 0;
+                stopG = 4;
+            }
+            else if (index == 1)
+            {
+                startG = 4;
+                stopG = 8;
+            }
+            int tt = 0, x = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int J = startG; J < stopG; J++)
+                {
+                    if (Kay.Length == x) break;
+                    tt = D.IndexOf(Kay[x]);
+                    if (0 <= tt)
+                    {
+                        MAS[i, J] = Kay[x];
+                        D = D.Remove(tt, 1);
+                    }
+                    else
+                    {
+                        J--;
+                    }
+                    x++;
+                }
+                if (Kay.Length == x) break;
+            }
+            x = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int J = startG; J < stopG; J++)
+                {
+                    if (MAS[i, J] == '\0')
+                    {
+                        MAS[i, J] = D[0];
+                        D = D.Remove(0, 1);
+                    }
+                }
+            }
+        }
+        static string[] split(string str3)
+        {
+            char[] Kay;
+            Regex regex = new Regex(@"\W");
+            str3 = regex.Replace(str3, "").ToString();
+            if (str3.Length % 2 != 0)
+            {
+                str3 += "Ъ";
+            }
+            for (int i = 2; i < str3.Length; i += 3)
+            {
+                str3 = str3.Insert(i, "&");
+            }
+            string[] arrayMS = str3.Split('&');
+            str3 = str3.Remove(0);
+            for (int i = 0; i < arrayMS.Length; i++)
+            {
+                Kay = arrayMS[i].ToCharArray();
+                if (Kay[0] == Kay[1])
+                {
+                    arrayMS[i] = arrayMS[i].Insert(1, "Ъ");
+                }
+            }
+            for (int i = 0; i < arrayMS.Length; i++)
+            {
+                str3 += arrayMS[i];
+            }
+            if (str3.Length % 2 != 0)
+            {
+                str3 += "Ъ";
+            }
+            for (int i = 2; i < str3.Length; i += 3)
+            {
+                str3 = str3.Insert(i, "&");
+            }
+            arrayMS = str3.Split('&');
+            for (int i = 0; i < arrayMS.Length; i++)
+            {
+                Console.Write(arrayMS[i] + "\t");
+            }
+            Console.WriteLine();
+            return arrayMS;
+        }
+        static void google(string[] arrayMS, char[,] MAS)
+        {
+            char[] Kay;
+            int i1 = 0, i2 = 0, j1 = 0, j2 = 0;
+            for (int i = 0; i < arrayMS.Length; i++)
+            {
+                Kay = arrayMS[i].ToCharArray();
+                for (int ii = 0; ii < 8; ii++)
+                {
+                    for (int jj = 0; jj < 4; jj++)
+                    {
+                        if (Kay[0] == MAS[ii, jj])
+                        {
+                            i1 = ii;
+                            j1 = jj;
+                        }
+
+                    }
+                }
+                for (int ii = 0; ii < 8; ii++)
+                {
+                    for (int jj = 4; jj < 8; jj++)
+                    {
+                        if (Kay[1] == MAS[ii, jj])
+                        {
+                            i2 = ii;
+                            j2 = jj;
+                        }
+                    }
+                }
+                if (j1 == j2)
+                {
+                    if (j1 + 1 < 8)
+                    {
+                        Console.Write(MAS[i1, j1 + 1]);
+                    }
+                    else
+                    {
+                        Console.Write(MAS[i1, 0]);
+                    }
+                    if (j2 + 1 < 8)
+                    {
+                        Console.Write(MAS[i2, j2 + 1]);
+                    }
+                    else
+                    {
+                        Console.Write(MAS[i2, 0]);
+                    }
+
+                }
+                else
+                {
+                    Console.Write(MAS[i2, j1]);
+                    Console.Write(MAS[i1, j2]);
+                }
+                Console.Write("\t");
+
+            }
+        }
+        static void trisrmusa()
+        {
+            char[] Kay = "Кинотеатр".ToUpper().ToCharArray();//ААБОРТ
+            string str3 = "Весь алгоритм шифрования, кроме значения секретного ключа, известен криптоаналитикам противника.".ToUpper();//Весь алгоритм шифрования, кроме значения секретного ключа, известен криптоаналитикам противника.
+            char[,] MAS = new char[8, 8];
+
+            append(D, Kay, MAS, 0);
+            append(D1, Kay, MAS, 1);
+            drow(8, 8, MAS);
+            Console.WriteLine("Весь алгоритм шифрования, кроме значения секретного ключа, известен криптоаналитикам противника.");
+            string[] arrayMS = split(str3);
+            Console.WriteLine();
+            google(arrayMS, MAS);
+            Console.WriteLine();
+
+        }
+        static void trisrmusa1()
+        {
+            Console.Write("введите ключь 1:");
+            char[] Kay = Console.ReadLine().ToUpper().ToCharArray();
+            Console.Write("введите ключь 2:");
+            char[] Kay1 = Console.ReadLine().ToUpper().ToCharArray();
+            Console.Write("введите слово:");
+            string str3 = Console.ReadLine().ToUpper();
+            char[,] MAS = new char[8, 8];
+
+            append(D, Kay, MAS, 0);
+            append(D1, Kay1, MAS, 1);
+            drow(8, 8, MAS);
+            string[] arrayMS = split(str3);
+            Console.WriteLine();
+            google(arrayMS, MAS);
+            Console.WriteLine();
+
+
+        }
+        static void Main(string[] args)
+        {
+            for (;;)
+            {
+                //Console.WriteLine("Кураедов KBP Superman ");
+                Console.WriteLine("1: static uezar: ");
+                Console.WriteLine("2: dinamik uezar: ");
+                Console.WriteLine("3: static trisrmusa: ");
+                Console.WriteLine("4: dinamik trisrmusa: ");
+                int X = Convert.ToInt32(Console.ReadLine());
+                switch (X)
+                {
+                    case 1:
+                        uezar();
+                        break;
+                    case 2:
+                        uezar2();
+                        break;
+                    case 3:
+                        trisrmusa();
+                        break;
+                    case 4:
+                        trisrmusa1();
+                        break;
+                    case 5:
+                        return;
+                }
+            }
+        }
+    }
+}
+
